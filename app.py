@@ -23,9 +23,6 @@ def vergi_puani(metin):
             puan += v
     return min(puan, 100)
 
-def madde_bul(no, maddeler):
-    return next((m for m in maddeler if str(m["madde"]) == str(no)), None)
-
 def renk(p):
     if p >= 70:
         return "green"
@@ -33,13 +30,22 @@ def renk(p):
         return "orange"
     return "red"
 
+def load_json_safely(path):
+    with open(path, "rb") as f:
+        raw = f.read()
+    text = raw.decode("utf-8-sig")
+    return json.loads(text)
+
+def madde_bul(no, maddeler):
+    return next((m for m in maddeler if str(m["madde"]) == str(no)), None)
+
 @app.route("/", methods=["GET"])
 def ana():
     madde = request.args.get("madde")
+    karsilastir = request.args.get("karsilastir")
     b = request.args.get("b")
 
-    with open(DATA_PATH, encoding="utf-8") as f:
-        maddeler = json.load(f)
+    maddeler = load_json_safely(DATA_PATH)
 
     html = """
     <html>
@@ -76,7 +82,7 @@ def ana():
         </form>
     """
 
-    if madde and madde.isdigit():
+    if madde and madde.isdigit() and not karsilastir:
         m = madde_bul(madde, maddeler)
         if m:
             p = vergi_puani(m["metin"])
@@ -84,11 +90,46 @@ def ana():
             <div class="card">
                 <h3>
                     Madde {m['madde']} – {m['baslik']}
-                    <a class="plus" href="/?madde={m['madde']}&b=1">+</a>
+                    <a class="plus" href="/?madde={m['madde']}&karsilastir=1">+</a>
                 </h3>
                 <p>{m['metin']}</p>
                 <p><b>Vergiyle İlgililik:</b>
                 <span style="color:{renk(p)}">%{p}</span></p>
+            </div>
+            """
+
+    if madde and karsilastir and not b:
+        html += f"""
+        <div class="card">
+            <h3>Madde {madde} ile karşılaştır</h3>
+            <form method="get">
+                <input type="hidden" name="madde" value="{madde}">
+                <input type="hidden" name="karsilastir" value="1">
+                <input type="text" name="b" placeholder="Karşılaştırılacak madde (örn: 10)">
+                <button type="submit">Karşılaştır</button>
+            </form>
+        </div>
+        """
+
+    if madde and b and madde.isdigit() and b.isdigit():
+        a_m = madde_bul(madde, maddeler)
+        b_m = madde_bul(b, maddeler)
+
+        if a_m and b_m:
+            ap = vergi_puani(a_m["metin"])
+            bp = vergi_puani(b_m["metin"])
+
+            html += f"""
+            <div class="card">
+                <h3>Madde {madde}</h3>
+                <p>{a_m['metin']}</p>
+                <p><b>Vergiyle İlgililik:</b>
+                <span style="color:{renk(ap)}">%{ap}</span></p>
+
+                <h3>Madde {b}</h3>
+                <p>{b_m['metin']}</p>
+                <p><b>Vergiyle İlgililik:</b>
+                <span style="color:{renk(bp)}">%{bp}</span></p>
             </div>
             """
 
