@@ -1,4 +1,4 @@
-[
+﻿[
   {
     "madde": 73,
     "baslik": "Vergi Ödevi",
@@ -8,5 +8,20 @@
     "madde": 10,
     "baslik": "Kanun Önünde Eşitlik",
     "metin": "Herkes, kanun önünde eşittir."
+  },
+  {
+    "madde": 2,
+    "baslik": "Cumhuriyetin Nitelikleri",
+    "metin": "Türkiye Cumhuriyeti, toplumun huzuru, milli dayanışma ve adalet anlayışı içinde, sosyal bir hukuk devletidir."
+  },
+  {
+    "madde": 35,
+    "baslik": "Mülkiyet Hakkı",
+    "metin": "Herkes, mülkiyet ve miras haklarına sahiptir."
+  },
+  {
+    "madde": 65,
+    "baslik": "Devletin Mali Yükümlülükleri",
+    "metin": "Devlet, sosyal ve ekonomik alanlarda Anayasa ile belirlenen görevlerini, mali kaynaklarının yeterliliği ölçüsünde yerine getirir."
   }
 ]
