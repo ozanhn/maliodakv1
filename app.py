@@ -12,7 +12,7 @@ def madde_bul(no, maddeler):
     return next((m for m in maddeler if str(m.get("madde")) == str(no)), None)
 
 def uyum_hesapla(a, b):
-    puan = 20  # taban puan
+    puan = 20
 
     if a["baslik"] == b["baslik"]:
         puan += 40
@@ -60,16 +60,69 @@ def ana():
     <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        body { font-family:Segoe UI; background:#eef1f4; margin:0; }
-        .center { height:100vh; display:flex; justify-content:center; align-items:center; flex-direction:column; }
-        .logo { font-size:46px; color:#1a237e; margin-bottom:25px; }
-        input { padding:12px; width:280px; }
-        button { margin-top:10px; padding:10px 20px; background:#1a237e; color:white; border:none; }
-        .container { max-width:900px; margin:auto; padding:30px; }
-        .card { background:white; padding:25px; margin-top:25px; border-left:5px solid #1a237e; }
-        .plus { float:right; background:#1565c0; color:white; padding:6px 12px; border-radius:50%; text-decoration:none; }
-        .bar { height:16px; }
-        .uyari { background:#ffebee; border-left:5px solid #c62828; padding:15px; margin-top:20px; color:#b71c1c; }
+        body {
+            font-family:Segoe UI;
+            margin:0;
+            background:
+              linear-gradient(135deg, rgba(26,35,126,0.04) 25%, transparent 25%) -50px 0,
+              linear-gradient(225deg, rgba(26,35,126,0.04) 25%, transparent 25%) -50px 0,
+              linear-gradient(315deg, rgba(26,35,126,0.04) 25%, transparent 25%),
+              linear-gradient(45deg, rgba(26,35,126,0.04) 25%, transparent 25%);
+            background-size: 100px 100px;
+            background-color:#eef1f4;
+        }
+        .center {
+            height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            flex-direction:column;
+        }
+        .logo {
+            font-size:46px;
+            color:#1a237e;
+            margin-bottom:25px;
+        }
+        input {
+            padding:12px;
+            width:280px;
+        }
+        button {
+            margin-top:10px;
+            padding:10px 20px;
+            background:#1a237e;
+            color:white;
+            border:none;
+        }
+        .container {
+            max-width:900px;
+            margin:auto;
+            padding:30px;
+        }
+        .card {
+            background:white;
+            padding:25px;
+            margin-top:25px;
+            border-left:5px solid #1a237e;
+        }
+        .plus {
+            float:right;
+            background:#1565c0;
+            color:white;
+            padding:6px 12px;
+            border-radius:50%;
+            text-decoration:none;
+        }
+        .bar {
+            height:16px;
+        }
+        .uyari {
+            background:#ffebee;
+            border-left:5px solid #c62828;
+            padding:15px;
+            margin-top:20px;
+            color:#b71c1c;
+        }
     </style>
     </head><body>
     """
