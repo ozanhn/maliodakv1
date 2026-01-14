@@ -23,10 +23,43 @@ def ana():
     <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        body { font-family: Arial; background:#f5f5f5; margin:0; }
-        .container { max-width:800px; margin:auto; padding:20px; }
-        input { width:100%; padding:12px; font-size:16px; }
-        button { padding:10px 20px; margin-top:10px; }
+        body {
+            font-family: Arial;
+            background:#f5f5f5;
+            margin:0;
+            height:100vh;
+        }
+        .center-box {
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+            text-align:center;
+        }
+        h1 {
+            font-size:48px;
+            margin-bottom:20px;
+        }
+        form {
+            width:100%;
+            max-width:400px;
+        }
+        input {
+            width:100%;
+            padding:14px;
+            font-size:18px;
+        }
+        button {
+            margin-top:10px;
+            padding:10px 20px;
+            font-size:16px;
+        }
+        .container {
+            max-width:800px;
+            margin:auto;
+            padding:20px;
+        }
         .card {
             background:white;
             padding:20px;
@@ -46,15 +79,23 @@ def ana():
     </style>
     </head>
     <body>
-    <div class="container">
-
-    <form method="get">
-        <input type="text" name="madde" placeholder="Madde numarası gir (örn: 73)">
-        <button type="submit">Ara</button>
-    </form>
     """
 
-    if madde and madde.isdigit():
+    # MERKEZDE ARAMA (madde yoksa)
+    if not madde:
+        html += """
+        <div class="center-box">
+            <h1>MaliOdak</h1>
+            <form method="get">
+                <input type="text" name="madde" placeholder="Madde numarası gir (örn: 73)">
+                <button type="submit">Ara</button>
+            </form>
+        </div>
+        """
+
+    # SONUÇLAR
+    if madde:
+        html += '<div class="container">'
         m = madde_bul(madde, maddeler)
         if m:
             html += f"""
@@ -78,45 +119,45 @@ def ana():
         else:
             html += "<p>Madde bulunamadı.</p>"
 
-    if madde and karsilastir and not b:
-        html += f"""
-        <div class="card">
-            <h4>Karşılaştırılacak Madde</h4>
-            <form method="get">
-                <input type="hidden" name="madde" value="{madde}">
-                <input type="hidden" name="karsilastir" value="1">
-                <input type="text" name="b" placeholder="İkinci madde numarası">
-                <button type="submit">Karşılaştır</button>
-            </form>
-        </div>
-        """
-
-    if madde and b:
-        a = madde_bul(madde, maddeler)
-        b_m = madde_bul(b, maddeler)
-
-        if not b_m:
-            html += """
-            <div class="card">
-                <p class="risk">
-                ⚠️ Karşılaştırılan madde veri setinde bulunamadı.
-                Bu durum uygulamada kanun boşluğu veya yorum eksikliği riskine işaret eder.
-                </p>
-            </div>
-            """
-        else:
+        # Karşılaştırma formu
+        if karsilastir and not b:
             html += f"""
             <div class="card">
-                <h4>Karşılaştırma Sonucu</h4>
-                <p>
-                Madde {a['madde']} ile Madde {b_m['madde']} birlikte
-                yorumlandığında mali ve hukuki denge sağlanmalıdır.
-                Aksi takdirde normlar arası çelişki doğabilir.
-                </p>
+                <h4>Karşılaştırılacak Madde</h4>
+                <form method="get">
+                    <input type="hidden" name="madde" value="{madde}">
+                    <input type="hidden" name="karsilastir" value="1">
+                    <input type="text" name="b" placeholder="İkinci madde numarası">
+                    <button type="submit">Karşılaştır</button>
+                </form>
             </div>
             """
 
-    html += "</div></body></html>"
+        if b:
+            b_m = madde_bul(b, maddeler)
+            if not b_m:
+                html += """
+                <div class="card">
+                    <p class="risk">
+                    ⚠️ Karşılaştırılan madde veri setinde bulunamadı.
+                    Bu durum kanun boşluğu riskine işaret eder.
+                    </p>
+                </div>
+                """
+            else:
+                html += f"""
+                <div class="card">
+                    <h4>Karşılaştırma Sonucu</h4>
+                    <p>
+                    Madde {madde} ile Madde {b} birlikte yorumlanırken
+                    normlar arası denge gözetilmelidir.
+                    </p>
+                </div>
+                """
+
+        html += "</div>"
+
+    html += "</body></html>"
     return html
 
 if __name__ == "__main__":
