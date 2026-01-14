@@ -44,8 +44,14 @@ def ana():
     <style>
         body {
             font-family: "Segoe UI", Arial;
-            background:#eef1f4;
             margin:0;
+            background:
+              linear-gradient(135deg, rgba(26,35,126,0.04) 25%, transparent 25%) -50px 0,
+              linear-gradient(225deg, rgba(26,35,126,0.04) 25%, transparent 25%) -50px 0,
+              linear-gradient(315deg, rgba(26,35,126,0.04) 25%, transparent 25%),
+              linear-gradient(45deg, rgba(26,35,126,0.04) 25%, transparent 25%);
+            background-size: 100px 100px;
+            background-color: #eef1f4;
         }
         .center {
             height:100vh;
