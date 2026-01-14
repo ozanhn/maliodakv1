@@ -11,17 +11,22 @@ def madde_bul(no, maddeler):
 
 def uyum_hesapla(a, b):
     if not b:
-        return 20, "Veri eksikliği nedeniyle ciddi kanun boşluğu riski bulunmaktadır."
+        return 25, "Veri eksikliği nedeniyle norm boşluğu riski bulunmaktadır."
     if a["baslik"] == b["baslik"]:
-        return 95, "Maddeler arasında çok yüksek anayasal uyum vardır."
+        return 90, "Maddeler arasında yüksek düzeyde anayasal uyum mevcuttur."
     if "vergi" in a["baslik"].lower() or "mali" in a["baslik"].lower():
-        return 70, "Mali ilkeler bakımından kısmi uyum bulunmaktadır."
-    return 40, "Normlar arası yorum farklılığı ve çelişki riski mevcuttur."
+        return 65, "Mali ilkeler bakımından kısmi uyum söz konusudur."
+    return 40, "Normlar arası yorum farklılığı ve çelişki riski bulunmaktadır."
+
+def seviye(y):
+    if y >= 80: return "Yüksek Uyum"
+    if y >= 50: return "Orta Uyum"
+    return "Riskli"
 
 def renk(y):
-    if y >= 80: return "green"
-    if y >= 50: return "orange"
-    return "red"
+    if y >= 80: return "#2e7d32"     # koyu yeşil
+    if y >= 50: return "#f9a825"     # kurumsal sarı
+    return "#c62828"                 # koyu kırmızı
 
 @app.route("/", methods=["GET"])
 def ana():
@@ -33,30 +38,96 @@ def ana():
     b = request.args.get("b")
 
     html = """
-    <html><head>
+    <html>
+    <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        body { font-family: Arial; background:#f5f5f5; margin:0; }
-        .center { display:flex; flex-direction:column; justify-content:center; align-items:center; height:100vh; }
-        h1 { font-size:48px; }
-        input { padding:14px; width:300px; font-size:16px; }
-        button { padding:10px 20px; margin-top:10px; }
-        .container { max-width:800px; margin:auto; padding:20px; }
-        .card { background:white; padding:20px; border-radius:10px; margin-top:20px; }
-        .plus { float:right; background:orange; color:white; padding:6px 12px; border-radius:50%; text-decoration:none; }
-        .bar { height:20px; border-radius:10px; }
-        details summary { font-weight:bold; cursor:pointer; margin-top:10px; }
+        body {
+            font-family: "Segoe UI", Arial;
+            background:#eef1f4;
+            margin:0;
+        }
+        .center {
+            height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            flex-direction:column;
+        }
+        .logo {
+            font-size:48px;
+            font-weight:600;
+            color:#1a237e;
+            margin-bottom:30px;
+        }
+        input {
+            width:320px;
+            padding:14px;
+            font-size:16px;
+        }
+        button {
+            margin-top:10px;
+            padding:10px 24px;
+            font-size:15px;
+            background:#1a237e;
+            color:white;
+            border:none;
+            cursor:pointer;
+        }
+        button:hover { background:#0d133d; }
+        .container {
+            max-width:900px;
+            margin:auto;
+            padding:30px;
+        }
+        .card {
+            background:white;
+            padding:25px;
+            margin-top:25px;
+            border-radius:6px;
+            border-left:5px solid #1a237e;
+        }
+        .plus {
+            float:right;
+            background:#1565c0;
+            color:white;
+            padding:6px 12px;
+            border-radius:50%;
+            text-decoration:none;
+        }
+        details summary {
+            margin-top:15px;
+            font-weight:600;
+            cursor:pointer;
+        }
+        .bar-container {
+            background:#ddd;
+            border-radius:5px;
+            height:18px;
+            overflow:hidden;
+        }
+        .bar {
+            height:18px;
+            transition: width 1s ease;
+        }
+        .etiket {
+            margin-top:8px;
+            font-weight:600;
+        }
     </style>
-    </head><body>
+    </head>
+    <body>
     """
 
+    # ANA SAYFA
     if not madde:
         html += """
         <div class="center">
-            <h1>MaliOdak</h1>
+            <div class="logo">MaliOdak</div>
             <form>
-                <input name="madde" placeholder="Madde numarası (örn: 73)">
-                <br><button>Ara</button>
+                <input name="madde" placeholder="Anayasa Madde Numarası">
+                <br>
+                <button>Analiz Et</button>
             </form>
         </div>
         """
@@ -68,24 +139,24 @@ def ana():
             html += f"""
             <div class="card">
                 <h3>
-                Madde {a['madde']} – {a['baslik']}
-                <a class="plus" href="/?madde={madde}&karsilastir=1">+</a>
+                    Madde {a['madde']} – {a['baslik']}
+                    <a class="plus" href="/?madde={madde}&karsilastir=1">+</a>
                 </h3>
                 <p>{a['metin']}</p>
 
                 <details>
                     <summary>Neden Bu Madde Var?</summary>
-                    <p>{a['neden'] or 'Henüz eklenmedi.'}</p>
+                    <p>{a['neden']}</p>
                 </details>
 
                 <details>
                     <summary>Olmasaydı Ne Olurdu?</summary>
-                    <p>{a['olmasaydi'] or 'Henüz eklenmedi.'}</p>
+                    <p>{a['olmasaydi']}</p>
                 </details>
 
                 <details>
                     <summary>Olası Hukuki Risk</summary>
-                    <p>{a['risk'] or 'Belirtilmemiştir.'}</p>
+                    <p>{a['risk']}</p>
                 </details>
             </div>
             """
@@ -96,7 +167,7 @@ def ana():
                 <form>
                     <input type="hidden" name="madde" value="{madde}">
                     <input type="hidden" name="karsilastir" value="1">
-                    <input name="b" placeholder="Karşılaştırılacak madde">
+                    <input name="b" placeholder="Karşılaştırılacak Madde">
                     <button>Karşılaştır</button>
                 </form>
             </div>
@@ -106,12 +177,16 @@ def ana():
             b_m = madde_bul(b, maddeler)
             yuzde, yorum = uyum_hesapla(a, b_m)
             renkli = renk(yuzde)
+            etiket = seviye(yuzde)
 
             html += f"""
             <div class="card">
-                <h4>Karşılaştırma Sonucu</h4>
+                <h4>Norm Uyum Analizi</h4>
                 <p><b>Uyum Oranı:</b> %{yuzde}</p>
-                <div class="bar" style="width:{yuzde}%; background:{renkli};"></div>
+                <div class="bar-container">
+                    <div class="bar" style="width:{yuzde}%; background:{renkli};"></div>
+                </div>
+                <div class="etiket" style="color:{renkli};">{etiket}</div>
                 <p>{yorum}</p>
             </div>
             """
