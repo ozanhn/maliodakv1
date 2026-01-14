@@ -24,9 +24,9 @@ def seviye(y):
     return "Riskli"
 
 def renk(y):
-    if y >= 80: return "#2e7d32"     # koyu yeşil
-    if y >= 50: return "#f9a825"     # kurumsal sarı
-    return "#c62828"                 # koyu kırmızı
+    if y >= 80: return "#2e7d32"
+    if y >= 50: return "#f9a825"
+    return "#c62828"
 
 @app.route("/", methods=["GET"])
 def ana():
@@ -74,7 +74,6 @@ def ana():
             border:none;
             cursor:pointer;
         }
-        button:hover { background:#0d133d; }
         .container {
             max-width:900px;
             margin:auto;
@@ -114,12 +113,39 @@ def ana():
             margin-top:8px;
             font-weight:600;
         }
+
+        /* HAKKINDA */
+        .about-btn {
+            position:fixed;
+            right:20px;
+            bottom:20px;
+            font-size:14px;
+            color:#1a237e;
+            cursor:pointer;
+        }
+        .about-box {
+            display:none;
+            position:fixed;
+            right:20px;
+            bottom:60px;
+            width:300px;
+            background:white;
+            border:1px solid #ccc;
+            padding:15px;
+            font-size:14px;
+            box-shadow:0 0 10px rgba(0,0,0,0.2);
+        }
     </style>
+    <script>
+        function toggleAbout() {
+            var box = document.getElementById("about");
+            box.style.display = box.style.display === "block" ? "none" : "block";
+        }
+    </script>
     </head>
     <body>
     """
 
-    # ANA SAYFA
     if not madde:
         html += """
         <div class="center">
@@ -161,19 +187,7 @@ def ana():
             </div>
             """
 
-        if karsilastir and not b:
-            html += f"""
-            <div class="card">
-                <form>
-                    <input type="hidden" name="madde" value="{madde}">
-                    <input type="hidden" name="karsilastir" value="1">
-                    <input name="b" placeholder="Karşılaştırılacak Madde">
-                    <button>Karşılaştır</button>
-                </form>
-            </div>
-            """
-
-        if b:
+        if karsilastir and b:
             b_m = madde_bul(b, maddeler)
             yuzde, yorum = uyum_hesapla(a, b_m)
             renkli = renk(yuzde)
@@ -192,6 +206,18 @@ def ana():
             """
 
         html += "</div>"
+
+    # HAKKINDA
+    html += """
+    <div class="about-btn" onclick="toggleAbout()">MaliOdak nedir?</div>
+    <div class="about-box" id="about">
+        <b>MaliOdak</b>, Türkiye Cumhuriyeti Anayasası’nda yer alan mali ve vergisel hükümleri
+        analiz etmeyi amaçlayan akademik bir değerlendirme platformudur.<br><br>
+        Sistem, anayasa maddeleri arasındaki norm uyumunu ve olası çelişkileri
+        karşılaştırmalı ve yüzdelik analiz yöntemiyle incelemektedir.<br><br>
+        <b>Fikrî mülkiyet Doç. Dr. Doğan BOZDOĞAN’a aittir.</b>
+    </div>
+    """
 
     html += "</body></html>"
     return html
