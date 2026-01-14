@@ -1,8 +1,18 @@
 ﻿[
   {
-    "madde": 73,
-    "baslik": "Vergi Ödevi",
-    "metin": "Herkes, kamu giderlerini karşılamak üzere, mali gücüne göre vergi ödemekle yükümlüdür."
+    "madde": 1,
+    "baslik": "Devletin Şekli",
+    "metin": "Türkiye Devleti bir Cumhuriyettir."
+  },
+  {
+    "madde": 2,
+    "baslik": "Cumhuriyetin Nitelikleri",
+    "metin": "Türkiye Cumhuriyeti, sosyal bir hukuk devletidir."
+  },
+  {
+    "madde": 5,
+    "baslik": "Devletin Temel Amaç ve Görevleri",
+    "metin": "Devletin temel amaç ve görevleri, kişinin temel hak ve hürriyetlerini korumaktır."
   },
   {
     "madde": 10,
@@ -10,18 +20,33 @@
     "metin": "Herkes, kanun önünde eşittir."
   },
   {
-    "madde": 2,
-    "baslik": "Cumhuriyetin Nitelikleri",
-    "metin": "Türkiye Cumhuriyeti, toplumun huzuru, milli dayanışma ve adalet anlayışı içinde, sosyal bir hukuk devletidir."
-  },
-  {
     "madde": 35,
     "baslik": "Mülkiyet Hakkı",
     "metin": "Herkes, mülkiyet ve miras haklarına sahiptir."
   },
   {
+    "madde": 48,
+    "baslik": "Çalışma ve Sözleşme Hürriyeti",
+    "metin": "Herkes, dilediği alanda çalışma ve sözleşme hürriyetlerine sahiptir."
+  },
+  {
+    "madde": 60,
+    "baslik": "Sosyal Güvenlik Hakkı",
+    "metin": "Herkes, sosyal güvenlik hakkına sahiptir."
+  },
+  {
     "madde": 65,
-    "baslik": "Devletin Mali Yükümlülükleri",
-    "metin": "Devlet, sosyal ve ekonomik alanlarda Anayasa ile belirlenen görevlerini, mali kaynaklarının yeterliliği ölçüsünde yerine getirir."
+    "baslik": "Mali Kaynakların Yeterliliği",
+    "metin": "Devlet, görevlerini mali kaynaklarının yeterliliği ölçüsünde yerine getirir."
+  },
+  {
+    "madde": 73,
+    "baslik": "Vergi Ödevi",
+    "metin": "Herkes, mali gücüne göre vergi ödemekle yükümlüdür."
+  },
+  {
+    "madde": 167,
+    "baslik": "Devletin Ekonomik Görevleri",
+    "metin": "Devlet, ekonomik hayatı düzenleyici tedbirleri alır."
   }
 ]
