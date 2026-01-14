@@ -44,9 +44,26 @@ def ana():
     <style>
         body {
             font-family: "Segoe UI", Arial;
-            background:#eef1f4;
             margin:0;
+            background-color:#eef1f4;
+            background-image:
+            url("data:image/svg+xml;utf8,
+            <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'>
+              <g fill='none' stroke='%231a237e' stroke-width='6' opacity='0.06'>
+                <circle cx='150' cy='150' r='100'/>
+                <line x1='150' y1='50' x2='150' y2='250'/>
+                <text x='150' y='170' font-size='48'
+                  text-anchor='middle'
+                  fill='%231a237e'
+                  font-family='Segoe UI'
+                  opacity='0.15'>M</text>
+              </g>
+            </svg>");
+            background-repeat:no-repeat;
+            background-position:center;
+            background-size:300px;
         }
+
         .center {
             height:100vh;
             display:flex;
@@ -113,8 +130,6 @@ def ana():
             margin-top:8px;
             font-weight:600;
         }
-
-        /* HAKKINDA */
         .about-btn {
             position:fixed;
             right:20px;
@@ -170,20 +185,9 @@ def ana():
                 </h3>
                 <p>{a['metin']}</p>
 
-                <details>
-                    <summary>Neden Bu Madde Var?</summary>
-                    <p>{a['neden']}</p>
-                </details>
-
-                <details>
-                    <summary>Olmasaydı Ne Olurdu?</summary>
-                    <p>{a['olmasaydi']}</p>
-                </details>
-
-                <details>
-                    <summary>Olası Hukuki Risk</summary>
-                    <p>{a['risk']}</p>
-                </details>
+                <details><summary>Neden Bu Madde Var?</summary><p>{a['neden']}</p></details>
+                <details><summary>Olmasaydı Ne Olurdu?</summary><p>{a['olmasaydi']}</p></details>
+                <details><summary>Olası Hukuki Risk</summary><p>{a['risk']}</p></details>
             </div>
             """
 
@@ -207,19 +211,16 @@ def ana():
 
         html += "</div>"
 
-    # HAKKINDA
     html += """
     <div class="about-btn" onclick="toggleAbout()">MaliOdak nedir?</div>
     <div class="about-box" id="about">
-        <b>MaliOdak</b>, Türkiye Cumhuriyeti Anayasası’nda yer alan mali ve vergisel hükümleri
-        analiz etmeyi amaçlayan akademik bir değerlendirme platformudur.<br><br>
-        Sistem, anayasa maddeleri arasındaki norm uyumunu ve olası çelişkileri
-        karşılaştırmalı ve yüzdelik analiz yöntemiyle incelemektedir.<br><br>
+        <b>MaliOdak</b>, Türkiye Cumhuriyeti Anayasası’nda yer alan mali ve vergisel
+        hükümleri analiz etmeyi amaçlayan akademik bir değerlendirme platformudur.<br><br>
+        Sistem, norm uyumunu yüzdelik analiz yöntemiyle incelemektedir.<br><br>
         <b>Fikrî mülkiyet Doç. Dr. Doğan BOZDOĞAN’a aittir.</b>
     </div>
+    </body></html>
     """
-
-    html += "</body></html>"
     return html
 
 if __name__ == "__main__":
