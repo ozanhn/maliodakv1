@@ -1,52 +1,42 @@
 ﻿[
   {
-    "madde": 1,
-    "baslik": "Devletin Şekli",
-    "metin": "Türkiye Devleti bir Cumhuriyettir."
-  },
-  {
-    "madde": 2,
-    "baslik": "Cumhuriyetin Nitelikleri",
-    "metin": "Türkiye Cumhuriyeti, sosyal bir hukuk devletidir."
-  },
-  {
-    "madde": 5,
-    "baslik": "Devletin Temel Amaç ve Görevleri",
-    "metin": "Devletin temel amaç ve görevleri, kişinin temel hak ve hürriyetlerini korumaktır."
-  },
-  {
-    "madde": 10,
-    "baslik": "Kanun Önünde Eşitlik",
-    "metin": "Herkes, kanun önünde eşittir."
-  },
-  {
-    "madde": 35,
-    "baslik": "Mülkiyet Hakkı",
-    "metin": "Herkes, mülkiyet ve miras haklarına sahiptir."
-  },
-  {
-    "madde": 48,
-    "baslik": "Çalışma ve Sözleşme Hürriyeti",
-    "metin": "Herkes, dilediği alanda çalışma ve sözleşme hürriyetlerine sahiptir."
-  },
-  {
-    "madde": 60,
-    "baslik": "Sosyal Güvenlik Hakkı",
-    "metin": "Herkes, sosyal güvenlik hakkına sahiptir."
+    "madde": 73,
+    "baslik": "Vergi Ödevi",
+    "metin": "Herkes, mali gücüne göre vergi ödemekle yükümlüdür.",
+    "neden": "Bu madde, kamu hizmetlerinin finansmanını sağlamak ve mali güce dayalı adil bir vergi sistemi kurmak amacıyla düzenlenmiştir.",
+    "olmasaydi": "Vergi toplama yetkisi anayasal bir temelden yoksun kalır, kamu gelirleri keyfî uygulamalara açık hale gelirdi.",
+    "risk": "Eşitlik ilkesi ile uyumlu uygulanmadığı takdirde vergi adaleti zedelenebilir."
   },
   {
     "madde": 65,
     "baslik": "Mali Kaynakların Yeterliliği",
-    "metin": "Devlet, görevlerini mali kaynaklarının yeterliliği ölçüsünde yerine getirir."
+    "metin": "Devlet, görevlerini mali kaynaklarının yeterliliği ölçüsünde yerine getirir.",
+    "neden": "Devletin mali kapasitesinin sınırlarını belirleyerek bütçe disiplinini ve sürdürülebilir kamu maliyesini güvence altına alır.",
+    "olmasaydi": "Devlet, mali imkânlarını aşan yükümlülükler altına girerek bütçe açıklarını artırabilirdi.",
+    "risk": "Sosyal haklarla birlikte yorumlanmadığında kamu hizmetlerinde aksama ve yetki çatışması riski doğar."
   },
   {
-    "madde": 73,
-    "baslik": "Vergi Ödevi",
-    "metin": "Herkes, mali gücüne göre vergi ödemekle yükümlüdür."
+    "madde": 2,
+    "baslik": "Cumhuriyetin Nitelikleri",
+    "metin": "Türkiye Cumhuriyeti, sosyal bir hukuk devletidir.",
+    "neden": "Devletin ekonomik ve sosyal hayata müdahalesinin anayasal temelini oluşturarak kamu harcamalarını meşrulaştırır.",
+    "olmasaydi": "Sosyal harcamalar anayasal dayanak bulamaz, mali politikalar daraltıcı bir yapıya bürünürdü.",
+    "risk": "Mali kaynak yetersizliği ile birlikte yorumlanmadığında beklenti-harcamalar dengesizliği oluşabilir."
   },
   {
-    "madde": 167,
-    "baslik": "Devletin Ekonomik Görevleri",
-    "metin": "Devlet, ekonomik hayatı düzenleyici tedbirleri alır."
+    "madde": 10,
+    "baslik": "Kanun Önünde Eşitlik",
+    "metin": "Herkes, kanun önünde eşittir.",
+    "neden": "Vergi ve mali yükümlülüklerin ayrımcılıktan uzak ve objektif kriterlerle uygulanmasını güvence altına alır.",
+    "olmasaydi": "Vergi yükü belirli gruplar üzerinde yoğunlaşabilir ve mali adalet bozulurdu.",
+    "risk": "Vergi ödevi ile birlikte yorumlanmadığında uygulamada hukuki boşluklar oluşabilir."
+  },
+  {
+    "madde": 161,
+    "baslik": "Bütçe",
+    "metin": "Bütçe, devletin gelir ve giderlerini gösterir.",
+    "neden": "Vergi gelirleri ile kamu harcamaları arasındaki dengeyi sağlayarak mali şeffaflığı temin eder.",
+    "olmasaydi": "Kamu harcamaları denetimsiz hale gelir, mali yönetimde belirsizlik oluşurdu.",
+    "risk": "Vergi ödevi ve mali yeterlilik ilkeleriyle birlikte değerlendirilmediğinde bütçe disiplini zayıflar."
   }
 ]
