@@ -8,7 +8,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_PATH = os.path.join(BASE_DIR, "data.json")
 
 def madde_bul(no, maddeler):
-    return next((m for m in maddeler if str(m["madde"]) == str(no)), None)
+    return next((m for m in maddeler if str(m.get("madde")) == str(no)), None)
 
 @app.route("/", methods=["GET"])
 def ana():
@@ -51,17 +51,17 @@ def ana():
         if m:
             html += f"""
             <div class="card">
-                <h3>Madde {m['madde']} – {m['baslik']}</h3>
-                <p>{m['metin']}</p>
+                <h3>Madde {m.get('madde')} – {m.get('baslik','')}</h3>
+                <p>{m.get('metin','')}</p>
 
                 <h4>Neden Bu Madde Var?</h4>
-                <p>{m['neden']}</p>
+                <p>{m.get('neden','Bu madde için açıklama henüz eklenmedi.')}</p>
 
                 <h4>Olmasaydı Ne Olurdu?</h4>
-                <p>{m['olmasaydi']}</p>
+                <p>{m.get('olmasaydi','Bu madde kaldırıldığında oluşabilecek etkiler analiz edilecektir.')}</p>
 
                 <h4>Olası Hukuki Risk</h4>
-                <p class="risk">{m['risk']}</p>
+                <p class="risk">{m.get('risk','Belirgin bir risk tanımı bulunmamaktadır.')}</p>
             </div>
             """
         else:
