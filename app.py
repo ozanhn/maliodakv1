@@ -9,10 +9,11 @@ DATA_PATH = os.path.join(BASE_DIR, "data.json")
 ANAHTAR_KELIMELER = ["vergi", "mali", "kamu", "harcama", "bütçe", "gelir"]
 
 def madde_bul(no, maddeler):
-    return next((m for m in maddeler if str(m.get("madde")) == str(no)), None)
+    return next((m for m in maddeler if str(m["madde"]) == str(no)), None)
 
 def uyum_hesapla(a, b):
     puan = 20
+
     if a["baslik"] == b["baslik"]:
         puan += 40
 
@@ -29,7 +30,7 @@ def uyum_hesapla(a, b):
     elif puan >= 50:
         yorum = "Maddeler arasında kısmi uyum mevcuttur."
     else:
-        yorum = "Normlar arası çelişki tespit edilmiştir."
+        yorum = "Normlar arası çelişki tespit edilmiştir. Kanun boşluğu riski vardır."
 
     return puan, yorum
 
@@ -51,8 +52,14 @@ def ana():
     <style>
         body {
             font-family:Segoe UI;
-            background:#eef1f4;
             margin:0;
+            background:
+              linear-gradient(135deg, rgba(26,35,126,0.04) 25%, transparent 25%) -50px 0,
+              linear-gradient(225deg, rgba(26,35,126,0.04) 25%, transparent 25%) -50px 0,
+              linear-gradient(315deg, rgba(26,35,126,0.04) 25%, transparent 25%),
+              linear-gradient(45deg, rgba(26,35,126,0.04) 25%, transparent 25%);
+            background-size:100px 100px;
+            background-color:#eef1f4;
         }
         .center {height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;}
         .logo {font-size:46px;color:#1a237e;margin-bottom:25px;}
@@ -64,7 +71,15 @@ def ana():
         .plus {float:right;background:#1565c0;color:white;padding:6px 12px;border-radius:50%;text-decoration:none;}
         .bar {height:16px;}
         .uyari {background:#ffebee;border-left:5px solid #c62828;padding:15px;margin-top:20px;color:#b71c1c;}
+        .about-btn {position:fixed;right:20px;bottom:20px;color:#1a237e;cursor:pointer;}
+        .about-box {display:none;position:fixed;right:20px;bottom:60px;width:300px;background:white;padding:15px;border:1px solid #ccc;}
     </style>
+    <script>
+        function toggleAbout(){
+            var a=document.getElementById("about");
+            a.style.display=a.style.display==="block"?"none":"block";
+        }
+    </script>
     </head><body>
     """
 
@@ -78,51 +93,58 @@ def ana():
             </form>
         </div>
         """
-        return html + "</body></html>"
+    else:
+        a = madde_bul(madde, maddeler)
+        html += f"""
+        <div class="container">
+            <div class="card">
+                <h3>Madde {a['madde']} – {a['baslik']}
+                <a class="plus" href="/?madde={madde}&karsilastir=1">+</a></h3>
+                <p>{a['metin']}</p>
 
-    a = madde_bul(madde, maddeler)
-    if not a:
-        return "Madde bulunamadı."
+                <details><summary>Neden bu madde var?</summary><p>{a['neden']}</p></details>
+                <details><summary>Olmasaydı ne olurdu?</summary><p>{a['olmasaydi']}</p></details>
+                <details><summary>Olası hukuki risk</summary><p>{a['risk']}</p></details>
+            </div>
+        """
 
-    html += f"""
-    <div class="container">
-        <div class="card">
-            <h3>Madde {a['madde']} – {a['baslik']}
-            <a class="plus" href="/?madde={madde}&karsilastir=1">+</a></h3>
-            <p>{a['metin']}</p>
+        if karsilastir and not b:
+            html += f"""
+            <div class="card">
+                <form>
+                    <input type="hidden" name="madde" value="{madde}">
+                    <input type="hidden" name="karsilastir" value="1">
+                    <input name="b" placeholder="Karşılaştırılacak madde">
+                    <button>Karşılaştır</button>
+                </form>
+            </div>
+            """
 
-            <details><summary>Neden bu madde var?</summary><p>{a.get('neden','')}</p></details>
-            <details><summary>Olmasaydı ne olurdu?</summary><p>{a.get('olmasaydi','')}</p></details>
-            <details><summary>Olası hukuki risk</summary><p>{a.get('risk','')}</p></details>
-        </div>
+        if b:
+            b_m = madde_bul(b, maddeler)
+            puan, yorum = uyum_hesapla(a, b_m)
+            html += f"""
+            <div class="card">
+                <p><b>Uyum Oranı:</b> %{puan}</p>
+                <div style="background:#ddd;"><div class="bar" style="width:{puan}%;background:{renk(puan)};"></div></div>
+                <p>{yorum}</p>
+            """
+            if puan < 50:
+                html += "<div class='uyari'>⚠️ Normlar arası ciddi çelişki tespit edilmiştir.</div>"
+            html += "</div></div>"
+
+    html += """
+    <div class="about-btn" onclick="toggleAbout()">MaliOdak nedir?</div>
+    <div class="about-box" id="about">
+        MaliOdak, Türkiye Cumhuriyeti Anayasası’ndaki mali ve vergisel hükümleri
+        karşılaştırmalı ve yüzdelik analiz yöntemiyle inceleyen akademik bir platformdur.
+        <br><br>
+        <b>Fikrî mülkiyet Doç. Dr. Doğan BOZDOĞAN’a aittir.</b>
+    </div>
+    </body></html>
     """
 
-    if karsilastir and not b:
-        html += f"""
-        <div class="card">
-            <form>
-                <input type="hidden" name="madde" value="{madde}">
-                <input type="hidden" name="karsilastir" value="1">
-                <input name="b" placeholder="Karşılaştırılacak madde">
-                <button>Karşılaştır</button>
-            </form>
-        </div>
-        """
-
-    if b:
-        b_m = madde_bul(b, maddeler)
-        puan, yorum = uyum_hesapla(a, b_m)
-        html += f"""
-        <div class="card">
-            <p><b>Uyum Oranı:</b> %{puan}</p>
-            <div style="background:#ddd;"><div class="bar" style="width:{puan}%;background:{renk(puan)};"></div></div>
-            <p>{yorum}</p>
-        """
-        if puan < 50:
-            html += "<div class='uyari'>⚠️ Normlar arası ciddi çelişki bulunmaktadır.</div>"
-        html += "</div>"
-
-    return html + "</div></body></html>"
+    return html
 
 if __name__ == "__main__":
     app.run()
